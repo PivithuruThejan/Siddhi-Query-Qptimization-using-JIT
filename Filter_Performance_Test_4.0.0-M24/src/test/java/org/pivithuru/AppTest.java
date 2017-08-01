@@ -21,6 +21,10 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import org.apache.log4j.BasicConfigurator;
 
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
+
 /**
  * Unit test for simple App.
  */
@@ -50,20 +54,45 @@ public class AppTest
      * Rigourous Test :-)
      */
     public void testJavapart() throws InterruptedException {
+        long start = System.currentTimeMillis();
         App appInstance=new App();
         appInstance.javapart();
+        long end = System.currentTimeMillis();
+        System.out.println("Time: " + (end - start) + " ms.");
         assertTrue( true );
     }
 
+
+    /**
+     * creates an instance of App class and execute javapartwithoutscripting()
+     */
+
+    public void testJavaPartWithoutScripting(){
+        long start = System.currentTimeMillis();
+        App appInstance=new App();
+        appInstance.javapartwithoutscripting();
+        long end = System.currentTimeMillis();
+        System.out.println("Time: " + (end - start) + " ms.");
+        assertTrue( true );
+    }
     /**
      * creates an insance of App class and execute siddhipart() method
      * @throws InterruptedException
      */
 
     public void testSiddhi() throws InterruptedException {
+        long start = System.currentTimeMillis();
         App appInstance=new App();
         appInstance.siddhipart();
+        long end = System.currentTimeMillis();
+        System.out.println("Time: " + (end - start) + " ms.");
         assertTrue( true );
 
     }
+
+
+
+
+
+
 }

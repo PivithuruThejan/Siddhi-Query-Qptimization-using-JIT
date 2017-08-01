@@ -32,6 +32,9 @@ import java.util.ArrayList;
  */
 public class App
 {
+
+    public static final int COUNT = 1000000;
+
     /**
      *defines an  input stream
      * query has a filter
@@ -47,16 +50,16 @@ public class App
         siddhiAppRuntime.addCallback("query1",new QueryCallback() {
             @Override
             public void receive(long timeStamp, Event[] inEvents, Event[] removeEvents) {
-               // EventPrinter.print(timeStamp, inEvents, removeEvents);
+                //EventPrinter.print(timeStamp, inEvents, removeEvents);
             }
 
         });
         InputHandler inputHandler = siddhiAppRuntime.getInputHandler("players");
         siddhiAppRuntime.start();
 
+        long start = System.currentTimeMillis();
 
-
-        for(int i=1;i<=1000000;i++){
+        for(int i = 1; i<= COUNT; i++){
             inputHandler.send(new Object[]{"Upul Tharanga","Sri Lanka",33.0f,62.5f,32.5f,80.5f,16.3f,116.3f,"LHB"});
             inputHandler.send(new Object[]{"Anjelo Mathews","Sri Lanka",47.6f,65.3f,42.1f,83.4f,26.3f,136.3f,"RHB"});
             inputHandler.send(new Object[]{"Asela Gunaratne","Sri Lanka",53.7f,57.4f,36.5f,85.5f,36.3f,146.7f,"RHB"});
@@ -73,6 +76,9 @@ public class App
 
 
         }
+
+        long end = System.currentTimeMillis();
+        System.out.println("XTime: " + (end - start) + " ms.");
         siddhiAppRuntime.shutdown();
 
 
@@ -80,7 +86,7 @@ public class App
 
     /**
      * creates instances of events(Player Objects)
-     * filter them using an if statement
+     * filter them using a changeable if-else statement
      */
     public void javapart(){
         Player p1=new Player();
@@ -204,46 +210,193 @@ public class App
         p11.setT20Average(26.3f);
         p11.setT20StrikeRate(141.3f);
 
-        ArrayList<Player> playersList= new ArrayList<Player>();
-        playersList.add(p1);
-        playersList.add(p2);
-        playersList.add(p3);
-        playersList.add(p4);
-        playersList.add(p5);
-        playersList.add(p6);
-        playersList.add(p7);
-        playersList.add(p8);
-        playersList.add(p9);
-        playersList.add(p10);
-        playersList.add(p11);
+        MySiddhiManager mySiddhiManager=new MySiddhiManager();
+        MySiddhiAppRuntime mySiddhiAppRuntime=mySiddhiManager.createMySiddhiAppRuntime("TestAverage>45.0&(ODIAverage>40.0 |ODIStrikeRate >100.0) & !(T20Average <10.0 | T20StrikeRate >150.0)");
+        MyInputHandler myInputHandler=mySiddhiAppRuntime.getInputHandler(mySiddhiAppRuntime);
 
-        ArrayList<ChosenPlayer> chosenPlayersList= new ArrayList<ChosenPlayer>();
+        long start = System.currentTimeMillis();
 
+        for(int i = 1; i<= COUNT; i++){
+            myInputHandler.send(p1);
+            myInputHandler.send(p2);
+            myInputHandler.send(p3);
+            myInputHandler.send(p4);
+            myInputHandler.send(p5);
+            myInputHandler.send(p6);
+            myInputHandler.send(p7);
+            myInputHandler.send(p8);
+            myInputHandler.send(p9);
+            myInputHandler.send(p10);
+            myInputHandler.send(p11);
 
-        for(int i=1;i<=1000000;i++){
-            for(Player player:playersList){
-                if(player.getTestAverage()>45.0 & (player.getODIAverage()>40.0 | player.getODIStrikeRate()>100.0)& !(player.getT20Average()<10.0 |player.getT20StrikeRate()>150.0)){
-                    ChosenPlayer chosenPlayer=new ChosenPlayer();
-                    chosenPlayer.setName(player.getName());
-                    chosenPlayer.setBattingStyle(player.getBattingStyle());
-                    chosenPlayer.setCountry(player.getCountry());
-                    chosenPlayersList.add(chosenPlayer);
-                }
-            }
 
 
 
 
         }
 
-        for(ChosenPlayer chosenPlayer:chosenPlayersList){
-            /*System.out.print(chosenPlayer.getName()+" ");
-            System.out.print(chosenPlayer.getCountry()+" ");
-            System.out.print(chosenPlayer.getBattingStyle());
-            System.out.println("");*/
+        long end = System.currentTimeMillis();
+        System.out.println("XTime: " + (end - start) + " ms.");
+
+
+
+
+    }
+
+    /**
+     * creates instances of events(Player Objects)
+     * filter them using an if statement
+     */
+
+    public void javapartwithoutscripting(){
+        Player p1=new Player();
+        p1.setBattingStyle("LHB");
+        p1.setCountry("Sri Lanka");
+        p1.setName("Upul Tharanga");
+        p1.setTestAverage(33.0f);
+        p1.setTestStrikeRate(62.5f);
+        p1.setODIAverage(32.5f);
+        p1.setODIStrikeRate(80.5f);
+        p1.setT20Average(16.3f);
+        p1.setT20StrikeRate(116.3f);
+
+        Player p2=new Player();
+        p2.setBattingStyle("RHB");
+        p2.setCountry("Sri Lanka");
+        p2.setName("Anjelo Mathews");
+        p2.setTestAverage(47.6f);
+        p2.setTestStrikeRate(65.3f);
+        p2.setODIAverage(42.1f);
+        p2.setODIStrikeRate(83.4f);
+        p2.setT20Average(26.3f);
+        p2.setT20StrikeRate(136.3f);
+
+        Player p3=new Player();
+        p3.setBattingStyle("RHB");
+        p3.setCountry("Sri Lanka");
+        p3.setName("Asela Gunaratne");
+        p3.setTestAverage(53.7f);
+        p3.setTestStrikeRate(57.4f);
+        p3.setODIAverage(36.5f);
+        p3.setODIStrikeRate(85.5f);
+        p3.setT20Average(36.3f);
+        p3.setT20StrikeRate(146.7f);
+
+        Player p4=new Player();
+        p4.setBattingStyle("RHB");
+        p4.setCountry("England");
+        p4.setName("Joe Root");
+        p4.setTestAverage(55.8f);
+        p4.setTestStrikeRate(52.5f);
+        p4.setODIAverage(52.7f);
+        p4.setODIStrikeRate(88.3f);
+        p4.setT20Average(24.9f);
+        p4.setT20StrikeRate(128.3f);
+
+        Player p5=new Player();
+        p5.setBattingStyle("LHB");
+        p5.setCountry("England");
+        p5.setName("Ben Stokes");
+        p5.setTestAverage(41.2f);
+        p5.setTestStrikeRate(72.5f);
+        p5.setODIAverage(43.6f);
+        p5.setODIStrikeRate(90.7f);
+        p5.setT20Average(22.3f);
+        p5.setT20StrikeRate(133.8f);
+
+        Player p6=new Player();
+        p6.setBattingStyle("RHB");
+        p6.setCountry("New Zealand");
+        p6.setName("Kane Williamson");
+        p6.setTestAverage(54.2f);
+        p6.setTestStrikeRate(48.7f);
+        p6.setODIAverage(45.1f);
+        p6.setODIStrikeRate(79.3f);
+        p6.setT20Average(29.3f);
+        p6.setT20StrikeRate(119.3f);
+
+        Player p7=new Player();
+        p7.setBattingStyle("RHB");
+        p7.setCountry("Australia");
+        p7.setName("Steve Smith");
+        p7.setTestAverage(63.3f);
+        p7.setTestStrikeRate(51.5f);
+        p7.setODIAverage(50.5f);
+        p7.setODIStrikeRate(82.7f);
+        p7.setT20Average(16.3f);
+        p7.setT20StrikeRate(112.2f);
+
+        Player p8=new Player();
+        p8.setBattingStyle("RHB");
+        p8.setCountry("South Africa");
+        p8.setName("AB de  Villiers");
+        p8.setTestAverage(51.9f);
+        p8.setTestStrikeRate(62.1f);
+        p8.setODIAverage(52.5f);
+        p8.setODIStrikeRate(101.5f);
+        p8.setT20Average(33.3f);
+        p8.setT20StrikeRate(156.3f);
+
+        Player p9=new Player();
+        p9.setBattingStyle("RHB");
+        p9.setCountry("South Africa");
+        p9.setName("Hashim Amla");
+        p9.setTestAverage(47.8f);
+        p9.setTestStrikeRate(47.5f);
+        p9.setODIAverage(52.5f);
+        p9.setODIStrikeRate(86.5f);
+        p9.setT20Average(26.3f);
+        p9.setT20StrikeRate(127.3f);
+
+        Player p10=new Player();
+        p10.setBattingStyle("RHB");
+        p10.setCountry("India");
+        p10.setName("Virat Kholi");
+        p10.setTestAverage(52.0f);
+        p10.setTestStrikeRate(66.5f);
+        p10.setODIAverage(53.5f);
+        p10.setODIStrikeRate(89.5f);
+        p10.setT20Average(30.3f);
+        p10.setT20StrikeRate(136.3f);
+
+        Player p11=new Player();
+        p11.setBattingStyle("RHB");
+        p11.setCountry("India");
+        p11.setName("Rohit Sharma");
+        p11.setTestAverage(32.0f);
+        p11.setTestStrikeRate(62.5f);
+        p11.setODIAverage(42.5f);
+        p11.setODIStrikeRate(93.5f);
+        p11.setT20Average(26.3f);
+        p11.setT20StrikeRate(141.3f);
+
+        MySiddhiManager mySiddhiManager=new MySiddhiManager();
+        MySiddhiAppRuntime mySiddhiAppRuntime=mySiddhiManager.createMySiddhiAppRuntime("TestAverage>45.0&(ODIAverage>40.0 |ODIStrikeRate >100.0) & !(T20Average <10.0 | T20StrikeRate >150.0)");
+        MyInputHandler myInputHandler=mySiddhiAppRuntime.getInputHandler(mySiddhiAppRuntime);
+
+        long start = System.currentTimeMillis();
+
+        for(int i = 1; i<= COUNT; i++){
+            myInputHandler.sendoriginal(p1);
+            myInputHandler.sendoriginal(p2);
+            myInputHandler.sendoriginal(p3);
+            myInputHandler.sendoriginal(p4);
+            myInputHandler.sendoriginal(p5);
+            myInputHandler.sendoriginal(p6);
+            myInputHandler.sendoriginal(p7);
+            myInputHandler.sendoriginal(p8);
+            myInputHandler.sendoriginal(p9);
+            myInputHandler.sendoriginal(p10);
+            myInputHandler.sendoriginal(p11);
+
+
+
+
+
         }
 
-
+        long end = System.currentTimeMillis();
+        System.out.println("XTime: " + (end - start) + " ms.");
 
 
     }

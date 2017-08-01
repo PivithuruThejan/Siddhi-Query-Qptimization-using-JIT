@@ -10,7 +10,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="Filter_Performance_Test_4.0.0-M24" target="1.5" />
+      <module name="Filter_Performance_Test_4.0.0-M24" target="1.6" />
     </bytecodeTargetLevel>
   </component>
 </project>
